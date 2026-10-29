@@ -1,0 +1,51 @@
+{
+  "version": "0.8.0-beta.4",
+  "date": "2026-10-29",
+  "platform": "Windows 10/11 x64",
+  "sourceTests": {
+    "passed": 101,
+    "failed": 0
+  },
+  "rendererWorkflowTests": 24,
+  "packagedChecks": [
+    {
+      "name": "packaged-beta",
+      "checks": 15
+    },
+    {
+      "name": "packaged-details",
+      "checks": 6
+    },
+    {
+      "name": "packaged-ipc",
+      "checks": 3
+    },
+    {
+      "name": "packaged-reliability",
+      "checks": 8
+    },
+    {
+      "name": "packaged-experience",
+      "checks": 9
+    },
+    {
+      "name": "packaged-security",
+      "checks": 5
+    }
+  ],
+  "packagedSourceFilesMatched": 35,
+  "bundledEnginesMatched": 4,
+  "installedChecks": {
+    "passed": true,
+    "ipcChecks": 3,
+    "sourceMatches": true,
+    "executableMatches": true,
+    "enginesVerified": 4,
+    "fusesVerified": true
+  },
+  "signed": false,
+  "cleanMachineValidated": false,
+  "dependencySourceCoverageComplete": false,
+  "binaryReleasePublished": false,
+  "privacy": "Paths, profiles, links and user history are omitted."
+}

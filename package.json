@@ -1,0 +1,90 @@
+{
+  "name": "turbosave-desktop",
+  "version": "0.8.0-beta.4",
+  "description": "A local, open-source media downloader powered by yt-dlp and FFmpeg.",
+  "author": "TurboSave contributors",
+  "license": "GPL-3.0-only",
+  "private": true,
+  "type": "module",
+  "main": "src/main.mjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test --test-concurrency=2 tests/*.test.mjs",
+    "tools:prepare": "node scripts/prepare-tools.mjs",
+    "build": "node scripts/build.mjs",
+    "build:signed": "node scripts/build-signed.mjs",
+    "security:packaged": "node scripts/security-smoke.mjs",
+    "security:secrets": "node scripts/scan-secrets.mjs",
+    "release:keygen": "node scripts/create-release-key.mjs",
+    "release:sign-metadata": "node scripts/sign-release.mjs",
+    "build:dir": "electron-builder --win --dir --x64",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "electron": "45.0.0",
+    "electron-builder": "26.18.0",
+    "jsdom": "30.1.3"
+  },
+  "build": {
+    "appId": "org.turbosave.desktop",
+    "productName": "TurboSave Desktop",
+    "asar": true,
+    "beforePack": "scripts/before-pack.cjs",
+    "electronFuses": {
+      "runAsNode": false,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true
+    },
+    "electronDist": "node_modules/electron/dist",
+    "directories": {
+      "output": "release",
+      "buildResources": "build-resources"
+    },
+    "files": [
+      "src/**/*",
+      "ui/**/*",
+      "build-resources/icon.ico",
+      "build-resources/icon.png",
+      "build-resources/engines-manifest.json",
+      "build-resources/update-trust.json",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md",
+      "package.json"
+    ],
+    "extraResources": [
+      {"from":"build-resources/icon.ico","to":"branding/turbosave.ico"},
+      {
+        "from": "vendor",
+        "to": "tools",
+        "filter": [
+          "**/*",
+          "!downloads/**"
+        ]
+      }
+    ],
+    "win": {
+      "icon": "build-resources/icon.ico",
+      "target": [
+        "portable",
+        "nsis"
+      ],
+      "signAndEditExecutable": true,
+      "signExecutable": false
+    },
+    "portable": {
+      "artifactName": "TurboSave-Desktop-${version}-portable.exe"
+    },
+    "nsis": {
+      "installerIcon": "build-resources/icon.ico",
+      "uninstallerIcon": "build-resources/icon.ico",
+      "artifactName": "TurboSave-Desktop-${version}-setup.exe",
+      "oneClick": false,
+      "perMachine": false,
+      "differentialPackage": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  }
+}

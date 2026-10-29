@@ -1,0 +1,10 @@
+import { spawn } from 'node:child_process';
+import { statfs } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+const root=fileURLToPath(new URL('..',import.meta.url));
+const disk=await statfs(root);
+if(Number(disk.bavail)*Number(disk.bsize)<3*1024**3)throw new Error('Windows packaging needs at least 3 GB of free disk space. Free space and run npm run build again.');
+const cli=fileURLToPath(new URL('../node_modules/electron-builder/cli.js',import.meta.url));
+const child=spawn(process.execPath,[cli,'--win','portable','nsis','--x64'],{cwd:root,stdio:'inherit',env:{...process.env,ELECTRON_BUILDER_COMPRESSION_LEVEL:'3'}});
+child.on('error',error=>{console.error(error.message);process.exitCode=1;});
+child.on('exit',code=>{process.exitCode=code??1;});
